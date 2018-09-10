@@ -794,6 +794,7 @@ static void cmd_quit(const char *arg, struct tcp_pcb *pcb, struct ftpd_msgstate 
 
 static void cmd_cwd(const char *arg, struct tcp_pcb *pcb, struct ftpd_msgstate *fsm)
 {
+	if(arg[0] == '/') arg++;
 	if (!vfs_chdir(fsm->vfs, arg)) {
 		send_msg(pcb, fsm, (char*)msg250);
 	} else {
@@ -1095,6 +1096,7 @@ static void cmd_mkd(const char *arg, struct tcp_pcb *pcb, struct ftpd_msgstate *
 
 static void cmd_rmd(const char *arg, struct tcp_pcb *pcb, struct ftpd_msgstate *fsm)
 {
+	if(arg[0] == '/') arg++;
 	vfs_stat_t st;
 
 	if (arg == NULL) {
@@ -1122,6 +1124,7 @@ static void cmd_rmd(const char *arg, struct tcp_pcb *pcb, struct ftpd_msgstate *
 
 static void cmd_dele(const char *arg, struct tcp_pcb *pcb, struct ftpd_msgstate *fsm)
 {
+	if(arg[0] == '/') arg++;
 	vfs_stat_t st;
 
 	if (arg == NULL) {
