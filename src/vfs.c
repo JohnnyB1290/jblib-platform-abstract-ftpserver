@@ -36,6 +36,9 @@ vfs_dirent_t dir_ent;
 
 FIL guard_for_the_whole_fs;
 
+typedef void (*fCloseCallback)(void);
+static fCloseCallback closeFileCallback = NULL;
+
 int vfs_read (void* buffer, int dummy, int len, vfs_file_t* file) {
 	unsigned int bytesread;
 	FRESULT r = f_read(file, buffer, len, &bytesread);
@@ -73,9 +76,16 @@ int vfs_stat(vfs_t* vfs, const char* filename, vfs_stat_t* st) {
 void vfs_close(vfs_t* vfs) {
 }
 
+void ftpVfsAddFileCloseCallback(void (*fCloseCall)(void))
+{
+	closeFileCallback = fCloseCall;
+}
+
 void vfs_close_file(vfs_file_t* file) {
 	f_close(file);
 	mem_free(file);
+	if(closeFileCallback)
+		closeFileCallback();
 }
 
 int vfs_write (void* buffer, int dummy, int len, vfs_file_t* file) {

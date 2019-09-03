@@ -1,4 +1,4 @@
-/* Copyright (c) 2013, Philipp Tölke
+/* Copyright (c) 2013, Philipp Tï¿½lke
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -86,6 +86,7 @@ int vfs_stat(vfs_t* vfs, const char* filename, vfs_stat_t* st);
 void vfs_closedir(vfs_dir_t* dir);
 vfs_dir_t* vfs_opendir(vfs_t* vfs, const char* path);
 struct tm* gmtime(ftp_time_t *c_t);
+void ftpVfsAddFileCloseCallback(void (*fCloseCall)(void));
 
 #ifdef __cplusplus
 }
